@@ -42,7 +42,7 @@ app.use(passport.session());
 app.use("/uploads", express.static(__dirname + "/uploads"));
 
 //Setting up a connection with mongoDB using mongoose
-mongoose.connect("mongodb://localhost:27017/announcementsDB", {
+mongoose.connect("mongodb+srv://che-na-ra-bha:y7bDhsVV5IgW3eRw@cluster0.xhajw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
