@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 //Creating Criminal Schema
 const criminalSchema = {
@@ -16,4 +16,4 @@ const criminalSchema = {
 //Creating Criminal model from schema.
 const Criminal = mongoose.model("Criminal", criminalSchema);
 
-module.exports =  Criminal;
+module.exports = Criminal;

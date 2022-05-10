@@ -15,11 +15,12 @@ const session = require("express-session");
 const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const passportLocal = require("passport-local");
-require('dotenv').config()
+require("dotenv").config();
 const PORT = process.env.PORT;
+const MONGO_URL = process.env.MONGO_URL;
 
 //Variable to check if a police is logged in.
-var isPoliceLoggedIn = false; 
+var isPoliceLoggedIn = false;
 
 const app = express();
 app.use(express.json());
@@ -29,7 +30,8 @@ app.use(express.static("public"));
 // app.use(express.static(path.join(__dirname, "public")));
 
 //Setting up sessions and initialising passport.
-app.use(session({
+app.use(
+  session({
     secret: "Secret for Police Website.",
     resave: false,
     saveUninitialized: false,
@@ -42,11 +44,14 @@ app.use(passport.session());
 app.use("/uploads", express.static(__dirname + "/uploads"));
 
 //Setting up a connection with mongoDB using mongoose
-mongoose.connect("mongodb+srv://che-na-ra-bha:y7bDhsVV5IgW3eRw@cluster0.xhajw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useFindAndModify: false,
-});
+mongoose.connect(
+  "mongodb+srv://che-na-ra-bha:y7bDhsVV5IgW3eRw@cluster0.xhajw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+  }
+);
 
 mongoose.set("useCreateIndex", true);
 
@@ -55,10 +60,9 @@ const announcementSchema = {
   content: String,
 };
 
-
-
 //Creating user fir schema
-const firSchema = new mongoose.Schema({
+const firSchema = new mongoose.Schema(
+  {
     fullname: String,
     fatherorhusbandname: String,
     address: String,
@@ -189,10 +193,10 @@ const User = new mongoose.model("User", userSchema);
 
 //Creating a Authority(Police) model from the schema.
 const Authority = new mongoose.model("Authority", policeSchema);
- 
+
 //Creating local strategy from passport
 passport.use(User.createStrategy());
- 
+
 //Serializing and De-serializing using passport.
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
@@ -200,80 +204,77 @@ passport.deserializeUser(User.deserializeUser());
 //Route Declaration
 //Get and Post routes for login page(Check police or Member)
 
-app.use('/', require('./routes'))
-app.get("/decideLogin", function(req, res) {
-    if(req.isAuthenticated()){
-        res.redirect("/");
-    } else {
-        res.render("decideLogin");
-    }
+app.use("/", require("./routes"));
+app.get("/decideLogin", function (req, res) {
+  if (req.isAuthenticated()) {
+    res.redirect("/");
+  } else {
+    res.render("decideLogin");
+  }
 });
- 
+
 //Get route for login of any authority
-app.get("/police_login", function(req, res) {
-    if(!isPoliceLoggedIn){
-        res.render("police_login");
-    } else {
-        res.redirect("/phome");
-    }
-    
+app.get("/police_login", function (req, res) {
+  if (!isPoliceLoggedIn) {
+    res.render("police_login");
+  } else {
+    res.redirect("/phome");
+  }
 });
- 
+
 //Get route for register page of authority
-app.get("/police_register", function(req, res) {
-    if(!isPoliceLoggedIn){
-        res.render("police_register");
-    } else {
-        res.redirect("/phome");
-    }
+app.get("/police_register", function (req, res) {
+  if (!isPoliceLoggedIn) {
+    res.render("police_register");
+  } else {
+    res.redirect("/phome");
+  }
 });
- 
+
 //Get route for User login page
-app.get("/user_login", function(req, res) {
-    if(req.isAuthenticated()){
-        res.redirect("/");
-    } else {
-        res.render("user_login");
-    }
+app.get("/user_login", function (req, res) {
+  if (req.isAuthenticated()) {
+    res.redirect("/");
+  } else {
+    res.render("user_login");
+  }
 });
- 
+
 //Get route for user register page.
-app.get("/user_register", function(req, res) {
-    if(req.isAuthenticated()){
-        res.redirect("/");
-    } else {
-        res.render("user_register");
-    }
+app.get("/user_register", function (req, res) {
+  if (req.isAuthenticated()) {
+    res.redirect("/");
+  } else {
+    res.render("user_register");
+  }
 });
-
-
 
 // faq page  get route
-app.get('/faq',async function(req, res) {
-    try {
-        let questions = await Faqs.find({});
-        return res.render('faq',{
-            faqs: questions.reverse()
-        });
-    } catch (error) {
-        console.log(error);
-    }
+app.get("/faq", async function (req, res) {
+  try {
+    let questions = await Faqs.find({});
+    return res.render("faq", {
+      faqs: questions.reverse(),
+    });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 //Faq page post route
-app.post('/faq/add/',async function (req, res) {
-    try {
-        let faq = await Faqs.create({question: req.body.question});
-        if(faq){
-            console.log('****Posted Question Successfully****');
-        }else{
-            console.log('error inposting question');
-        }
-        return res.redirect('back');
-    } catch (error) {
-        console.log(error);        
-        return res.redirect('back');
+app.post("/faq/add/", async function (req, res) {
+  try {
+    let faq = await Faqs.create({ question: req.body.question });
+    if (faq) {
+      console.log("****Posted Question Successfully****");
+    } else {
+      console.log("error inposting question");
     }
+    return res.redirect("back");
+  } catch (error) {
+    console.log(error);
+    return res.redirect("back");
+  }
 });
 
 // police side faq
@@ -293,18 +294,18 @@ app.get("/pfaq", async function (req, res) {
 });
 
 //Post request to answer FAQs
-app.post('/faq/answer/:faqid', async function (req, res) {
-   try {
-       let faqToAns = await Faqs.findByIdAndUpdate(req.params.faqid);
-       if(faqToAns){
-           faqToAns.answer = req.body.answer;
-           faqToAns.save();
-           return res.redirect('back');
-       }
-   } catch (error) {
-        console.log(error);
-       return res.redirect('back');
-   } 
+app.post("/faq/answer/:faqid", async function (req, res) {
+  try {
+    let faqToAns = await Faqs.findByIdAndUpdate(req.params.faqid);
+    if (faqToAns) {
+      faqToAns.answer = req.body.answer;
+      faqToAns.save();
+      return res.redirect("back");
+    }
+  } catch (error) {
+    console.log(error);
+    return res.redirect("back");
+  }
 });
 
 // gallery page
@@ -557,7 +558,6 @@ app.post("/delete", function (req, res) {
   res.redirect("/postannouncements");
 });
 
-
 //Renders the postcriminals list page where the data about criminals can be entered
 app.get("/postcriminalslist", function (req, res) {
   if (!isPoliceLoggedIn) {
@@ -657,53 +657,56 @@ app.get("/threateningform", function (req, res) {
 });
 
 // fir form for Others category
-app.get("/firform", function(req, res) {
-    res.render("firform");
+app.get("/firform", function (req, res) {
+  res.render("firform");
 });
 // get route for viewing the fir
-app.get("/viewfir", function(req, res) {
-    if (!isPoliceLoggedIn) {
-        return res.redirect("/police_login");
-    } else {
-        Fir1.find({}, function(err, foundItems) {
-            if (!err) {
-                res.render("viewfir", { firs: foundItems.reverse() });
-            } else {
-                console.log(err);
-            }
-        });
-    }
+app.get("/viewfir", function (req, res) {
+  if (!isPoliceLoggedIn) {
+    return res.redirect("/police_login");
+  } else {
+    Fir1.find({}, function (err, foundItems) {
+      if (!err) {
+        res.render("viewfir", { firs: foundItems.reverse() });
+      } else {
+        console.log(err);
+      }
+    });
+  }
 });
 // add firs of priyority 3
-app.get("/viewfirp2", function(req, res) {
-    if (!isPoliceLoggedIn) {
-        return res.redirect("/police_login");
-    } else {
-        Fir2.find({}, function(err, foundItems) {
-            if (!err) {
-                res.render("viewfirp2", { firs: foundItems.reverse() });
-            } else {
-                console.log(err);
-            }
-        });
-    }
+app.get("/viewfirp2", function (req, res) {
+  if (!isPoliceLoggedIn) {
+    return res.redirect("/police_login");
+  } else {
+    Fir2.find({}, function (err, foundItems) {
+      if (!err) {
+        res.render("viewfirp2", { firs: foundItems.reverse() });
+      } else {
+        console.log(err);
+      }
+    });
+  }
 });
 // displays firs of pripority3
-app.get("/viewfirp3", function(req, res) {
-    if (!isPoliceLoggedIn) {
-        return res.redirect("/police_login");
-    } else {
-        Fir3.find({}, function(err, foundItems) {
-            if (!err) {
-                res.render("viewfirp3", { firs: foundItems.reverse() });
-            } else {
-                console.log(err);
-            }
-        });
-    }
+app.get("/viewfirp3", function (req, res) {
+  if (!isPoliceLoggedIn) {
+    return res.redirect("/police_login");
+  } else {
+    Fir3.find({}, function (err, foundItems) {
+      if (!err) {
+        res.render("viewfirp3", { firs: foundItems.reverse() });
+      } else {
+        console.log(err);
+      }
+    });
+  }
 });
 // add firs of priyority 3
-app.post("/viewfir/priority1", upload.single("image"), async function(req, res) {
+app.post(
+  "/viewfir/priority1",
+  upload.single("image"),
+  async function (req, res) {
     let newFir1;
     if (!req.file) {
       newFir1 = await Fir1.create({
@@ -840,13 +843,12 @@ app.post(
 );
 
 //Logout route get request for both police and Users
-app.get("/logout", function(req, res){
-    req.logout();
-    isPoliceLoggedIn = false;
-    res.redirect("/");
-  });
- 
- 
+app.get("/logout", function (req, res) {
+  req.logout();
+  isPoliceLoggedIn = false;
+  res.redirect("/");
+});
+
 //Post route for police register page.
 app.post("/police_register", function (req, res) {
   if (isPoliceLoggedIn) {
@@ -924,11 +926,7 @@ app.post("/police_login", function (req, res) {
   });
 });
 
-
-
-
-
 //Listening to requests at port 3000
-app.listen(PORT, function(req, res) {
-    console.log(`Listening at port ${PORT}`);
+app.listen(PORT, function (req, res) {
+  console.log(`Listening at port ${PORT}`);
 });

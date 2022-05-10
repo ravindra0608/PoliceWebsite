@@ -1,7 +1,6 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const Criminal = require('../models/criminal')
-
+const Criminal = require("../models/criminal");
 
 //Rendering the criminals list page where data entered in the post criminals list is entered
 router.get("/criminalslist", function (req, res) {
@@ -9,7 +8,6 @@ router.get("/criminalslist", function (req, res) {
     res.render("criminalslist", { criminalsList: criminalsList });
   });
 });
-
 
 // exporting the router file
 module.exports = router;
