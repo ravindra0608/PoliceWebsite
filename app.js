@@ -57,6 +57,19 @@ const announcementSchema = {
   content: String,
 };
 
+//Creating Criminal Schema
+const criminalSchema = {
+  name: String,
+  crimename: String,
+  lastseen: String,
+  dangerlevel: String,
+  status: String,
+  img: {
+    data: Buffer,
+    contentType: String,
+  },
+};
+
 //Creating user fir schema
 const firSchema = new mongoose.Schema(
   {
@@ -168,6 +181,9 @@ userSchema.plugin(passportLocalMongoose);
 //Creating Announcements model from schema.
 const Announcement = mongoose.model("Announcement", announcementSchema);
 
+//Creating Criminal model from schema.
+const Criminal = mongoose.model("Criminal", criminalSchema);
+
 //Creating Fir model from schema.
 const Fir = mongoose.model("Fir", firSchema);
 
@@ -200,8 +216,6 @@ passport.deserializeUser(User.deserializeUser());
 
 //Route Declaration
 //Get and Post routes for login page(Check police or Member)
-
-app.use("/", require("./routes"));
 app.get("/decideLogin", function (req, res) {
   if (req.isAuthenticated()) {
     res.redirect("/");
@@ -263,7 +277,7 @@ app.post("/faq/add/", async function (req, res) {
   try {
     let faq = await Faqs.create({ question: req.body.question });
     if (faq) {
-      console.log("****Posted Question Successfully****");
+      console.log("*Posted Question Successfully*");
     } else {
       console.log("error inposting question");
     }
@@ -553,6 +567,13 @@ app.post("/delete", function (req, res) {
     }
   });
   res.redirect("/postannouncements");
+});
+
+//Rendering the criminals list page where data entered in the post criminals list is entered
+app.get("/criminalslist", function (req, res) {
+  Criminal.find({}, function (err, criminalsList) {
+    res.render("criminalslist", { criminalsList: criminalsList });
+  });
 });
 
 //Renders the postcriminals list page where the data about criminals can be entered
@@ -874,7 +895,7 @@ app.post("/user_register", function (req, res) {
     req.body.password,
     function (err, user) {
       if (err) {
-        console.log("*******", err);
+        console.log("***", err);
         res.redirect("/user_register");
       } else {
         passport.authenticate("local")(req, res, function () {
