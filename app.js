@@ -44,14 +44,11 @@ app.use(passport.session());
 app.use("/uploads", express.static(__dirname + "/uploads"));
 
 //Setting up a connection with mongoDB using mongoose
-mongoose.connect(
-  "mongodb+srv://che-na-ra-bha:y7bDhsVV5IgW3eRw@cluster0.xhajw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-  }
-);
+mongoose.connect(MONGO_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+});
 
 mongoose.set("useCreateIndex", true);
 
