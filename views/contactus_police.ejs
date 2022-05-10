@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/contactus_police.css">
+    
+</head>
+<body>
+    <header>
+        <img class="logo" src="../images/Logo.png" alt="Ap Police">
+    </header>
+    <div class="page">
+		<nav>
+            <div class="emblem">
+                <a href="index.html">
+                    <img src="../images/emblem.png" alt="National-emblem" class="icon">
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="/phome">Home</a></li>
+                <li><a href="/viewfir">View F.I.R</a></li>
+                <li><a href="/postannouncements">Announcements</a></li>
+                <li><a href="/postcriminalslist">Criminals List</a></li>
+                <li><a href="/gallerypolice">Media</a></li>
+                <li><a href="/pcontactus">Contact Us</a></li>
+                <li><a href="/pfaq">FAQs</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </nav>
+    </div>
+    <section id="contact-us">
+        <aside id="aside">
+            <div id="aside-image-container">
+    			<img id="comisioner-image" src="../images/comisioner.png">
+    			<img src="../images/ap-police-emblem.jfif">
+    			<img src="../images/socials.jfif">
+    		</div>
+    	</aside>
+        <section id="email-section">
+            <h2>add contact us details here</h2>
+            <form action="/contactus/add" name="contactus-add" id="contactus-form" method="POST">
+                <table style="border: none;" id="query-table" >
+                    <tr>
+                        <td colspan="2" style="padding-left: 1rem;"> Fill the details form</td>
+                    </tr>
+                    <tr>
+                        <td><label for="police-area">Area:</label></td>
+                        <td><input type="text" name="area" id="police-area" required></td>
+                    </tr>
+                    <tr>
+                        <td><label for="police-station">Station:</label></td>
+                        <td><input type="text" name="station" id="police-station" required></td>
+                    </tr>
+                    <tr>
+                        <td><label for="police-address">Address:</label></td>
+                        <td><textarea type="text" name="address" id="police-address" cols="30" rows="8"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td><label for="police-phoneno">Phone No:</label></td>
+                        <td><input type="text" name="phone" id="police-phoneno" required></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><button   id="send-button">Submit</button></td>
+                    </tr>
+                </table>
+            </form>
+            <table  class="table table-striped">
+                <tr>
+                    <th>Area</th>
+                    <th>station</th>
+                    <th>address</th>
+                    <th>Phone number</th>
+                    <th>delete row</th>
+                </tr>
+                <% for(station of policedet){%>
+                <tr>
+                    <td><%= station.area %></td>
+                    <td><%= station.station %></td>
+                    <td><%= station.address %></td>
+                    <td><%= station.phone %></td>
+                    <td><a href="/contactus/delete/<%= station._id %>">x</a></td>
+                </tr>    
+                <%} %>
+            </table>
+        </section>
+    
+        </form>
+
+        
+    </section>
+
+    
+    <footer id="social">
+        <h3>Follow us on Social Media!</h3>
+        <div class="socicons">
+            <a href="https://www.facebook.com/ANDHRAPRADESHSTATEPOLICE/" target="_blank">
+                <img src="images/facebook black.svg" alt="" class="initial">
+                <img src="images/facebook.svg" alt="" class="hidden">
+            </a>
+            <a href="https://twitter.com/APPOLICE100/" target="_blank">
+                <img src="images/twitter-sign.svg" alt="" class="initial">
+                <img src="images/twitter.svg" alt="" class="hidden">
+            </a>
+            <a href="https://www.instagram.com/appolice.100/?igshid=ocwaariy0bvd&hl=en" target="_blank">
+                <img src="images/instagram black.svg" alt="" class="initial">
+                <img src="images/instagram.svg" alt="" class="hidden">
+            </a>
+            <a href="https://www.youtube.com/channel/UC7Iu-yyZ0Yyi3-JJ4RfzOYw/featured" target="_blank">
+                <img src="images/youtube black.svg" alt="" class="initial">
+                <img src="images/youtube.svg" alt="" class="hidden">
+            </a>
+
+        </div>
+    </footer>
+    <script src="javascript/firscript.js"></script>
+</body>
+</html>

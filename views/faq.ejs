@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faq</title>
+    <link rel="stylesheet" href="css/cssforfaq.css">
+</head>
+<body>
+
+    <header>
+        <img class="logo" src="images/Logo.png" alt="Ap Police">
+    </header>
+
+    <section class="page">
+        <nav>
+            <div class="emblem">
+                <a href="homepage.html">
+                    <img src="images/emblem-removebg-preview.png" alt="National-emblem" class="icon">
+                </a>
+
+            </div>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/firpage">File F.I.R</a></li>
+                <li><a href="/criminalslist">Criminals List</a></li>
+                <li><a href="/gallery">Media</a></li>
+                <li><a href="/contactus">Contact Us</a></li>
+                <li><a href="/decideLogin">Login</a></li>
+                </li>
+                <div class="drop">
+                    <a href="#" class="more">More</a>
+
+                    <div class="dropdown">
+                        <a href="/faq">FAQ's</a>
+                    </div>
+                </div>
+                <li>
+            </ul>
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </nav>
+    
+    <div class="box">
+        <p class="heading">FAQs</p>
+        <div class="faqs">
+            <% for(faq of  faqs){%> 
+                <% if(faq.answer) { %> 
+                    <details>
+                        <summary> <%= faq.question %>  </summary>
+                        <p class="text"><%= faq.answer %> </p>
+                    </details>  
+                <% } %> 
+            <% } %> 
+            <details>
+                <summary>What does a police officer do?</summary>
+                <p class="text">A police officer is responsible for enforcing the law. Police officers are assigned to locations to patrol and watch for crime, enforce traffic violations, investigate criminal complaints and respond to emergency situations.</p>
+            </details>
+            <details>
+                <summary>What is an F.I.R ?</summary>
+                <p>F.I.R. means First Information Report, made to police, about commission of a cognizable offence, In effect, it  amounts to putting law in to motion by giving information relating to the commission of a cognizable offence to an  officer in charge of a police station, (which shall be reduced into writing and read over to  the informant) and shall be signed by the person giving such information.
+                    It is mandatory to give a copy of the first information report (as recorded by police) to the complainant or informant free of cost.</p>
+            </details>
+            <details>
+                <summary>What are the details to give when filing an FIR?</summary>
+                <p>Important details to include are the date, time, location and a description of the culprits or people involved. The sequence of events that occurred and details of what each person did or said.</p>
+            </details>
+            <details>
+                <summary>What to do if the police refuse to register an fir?</summary>
+                <p>If police refuse to register your FIR, you can make a complaint to a higher ranking officer such as the Superintendent of Police (SP), the Deputy Inspector General (DIG) or the Inspector General of Police (IGP).</p>
+            </details>
+            <details>
+                <summary>What happens once an fir has been registered?</summary>
+                <p>Once an FIR has been filed the police are legally bound to start investigating the case.</p>
+            </details>
+            <details>
+                <summary>What are the limitations on filing an FIR?</summary>
+                <p>An FIR can only be filed for a cognisable crime.</p>
+            </details>
+            <details>
+                <summary>What is meant by public place ?</summary>
+                <p>Public place includes (and means) the foreshore, the precincts of every public building or monument, and all place accessible to the public for drawing water, washing or bathing or for the purpose of recreation.</p>
+            </details>
+            <details>
+                <summary>What are the benefits of early recording of FIR?</summary>
+                <p>The FIR should be got recorded as early as possible, after the offence in questions. The early recording of FIR helps in the arrest of the real offenders and also helps in the collection of evidence of the crime.</p>
+            </details>
+        </div>
+    </div>
+    <section id="email-section">
+        <h2>Send Your Queries Here</h2>
+        <form action="/faq/add" name="queries-form" id="query-form" method="POST" >
+            <table style="border: none;" id="query-table" >
+                <tr>
+                    <td colspan="2" style="padding-left: 1rem;"> Feel Free to Contact US</td>
+                </tr>
+                <tr>
+                    <td><label for="query-sender-name"> Name:</label></td>
+                    <td><input type="text" placeholder="Naveen Kumar" id="query-sender-name" name="name"></td>
+                </tr>
+                <tr>
+                    <td><label for="query-sender-email"> Email:</label></td>
+                    <td><input type="email" required placeholder="abc@gmail.com" id="query-sender-email" name="email"></td>
+                </tr>
+                <tr>
+                    <td><label for="query"> Query:</label></td>
+                    <td><textarea name="question" id="query" cols="30" rows="5" required id="query" name="question"></textarea></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><button  name="Send" id="send-button">Submit</button></td>
+                </tr>
+            </table>
+        </form>
+    </section>
+
+
+    <footer id="social">
+        <h3>Follow us on Social Media!</h3>
+        <div class="socicons">
+            <a href="https://www.facebook.com/ANDHRAPRADESHSTATEPOLICE/" target="_blank">
+                <img src="images/facebook black.svg" alt="" class="initial">
+                <img src="images/facebook.svg" alt="" class="hidden">
+            </a>
+            <a href="https://twitter.com/APPOLICE100/" target="_blank">
+                <img src="images/twitter-sign.svg" alt="" class="initial">
+                <img src="images/twitter.svg" alt="" class="hidden">
+            </a>
+            <a href="https://www.instagram.com/appolice.100/?igshid=ocwaariy0bvd&hl=en" target="_blank">
+                <img src="images/instagram black.svg" alt="" class="initial">
+                <img src="images/instagram.svg" alt="" class="hidden">
+            </a>
+            <a href="https://www.youtube.com/channel/UC7Iu-yyZ0Yyi3-JJ4RfzOYw/featured" target="_blank">
+                <img src="images/youtube black.svg" alt="" class="initial">
+                <img src="images/youtube.svg" alt="" class="hidden">
+            </a>
+
+        </div>
+    </footer>
+    <script src="firscript.js"></script>
+</body>
+</html>
